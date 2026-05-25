@@ -6,6 +6,7 @@ import cors from 'cors'
 import helmet from 'helmet'
 import authRoutes from './modules/auth/auth.routes'
 import creditsRoutes from './modules/credits/credits.routes'
+import generationsRoutes from './modules/generations/generations.routes'
 
 const app = express()
 const PORT = process.env.PORT || 3000
@@ -20,6 +21,7 @@ app.get('/health', (req, res) => {
 
 app.use('/api/auth', authRoutes)
 app.use('/api/credits', creditsRoutes)
+app.use('/api/generations', generationsRoutes)
 
 app.listen(PORT, () => {
   console.log(`Inkr API running on port ${PORT}`)
