@@ -7,6 +7,9 @@ import helmet from 'helmet'
 import authRoutes from './modules/auth/auth.routes'
 import creditsRoutes from './modules/credits/credits.routes'
 import generationsRoutes from './modules/generations/generations.routes'
+import { globalLimiter, generationLimiter } from './middleware/rateLimiter'
+
+
 
 const app = express()
 const PORT = process.env.PORT || 3000
@@ -14,6 +17,8 @@ const PORT = process.env.PORT || 3000
 app.use(helmet())
 app.use(cors())
 app.use(express.json())
+app.use(globalLimiter)
+
 
 app.get('/health', (req, res) => {
   res.json({ status: 'ok', project: 'inkr-api' })
@@ -21,7 +26,7 @@ app.get('/health', (req, res) => {
 
 app.use('/api/auth', authRoutes)
 app.use('/api/credits', creditsRoutes)
-app.use('/api/generations', generationsRoutes)
+app.use('/api/generations', generationLimiter, generationsRoutes)
 
 app.listen(PORT, () => {
   console.log(`Inkr API running on port ${PORT}`)
