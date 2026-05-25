@@ -1,5 +1,8 @@
 import { prisma } from '../../lib/prisma'
-import { TransactionType } from '@prisma/client'
+import { PrismaClient, TransactionType } from '@prisma/client'
+import { ITXClientDenyList } from '@prisma/client/runtime/client.js'
+
+type TransactionClient = Omit<PrismaClient, ITXClientDenyList>
 
 export const getBalance = async (userId: string) => {
   const user = await prisma.user.findUnique({
@@ -18,7 +21,7 @@ export const addCredits = async (
   type: TransactionType,
   description: string
 ) => {
-  const result = await prisma.$transaction(async (tx) => {
+  const result = await prisma.$transaction(async (tx: TransactionClient) => {
     const user = await tx.user.update({
       where: { id: userId },
       data: { creditBalance: { increment: amount } },
@@ -53,7 +56,7 @@ export const deductCredits = async (
   if (!user) throw new Error('User not found')
   if (user.creditBalance < amount) throw new Error('Insufficient credits')
 
-  const result = await prisma.$transaction(async (tx) => {
+  const result = await prisma.$transaction(async (tx: TransactionClient) => {
     const updated = await tx.user.update({
       where: { id: userId },
       data: { creditBalance: { decrement: amount } },
