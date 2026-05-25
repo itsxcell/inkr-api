@@ -1,23 +1,26 @@
-import express from 'express';
-import cors from 'cors';
-import helmet from 'helmet';
-import dotenv from 'dotenv';
+import dotenv from 'dotenv'
+dotenv.config()
 
-dotenv.config();
+import express from 'express'
+import cors from 'cors'
+import helmet from 'helmet'
+import authRoutes from './modules/auth/auth.routes'
 
-const app = express();
-const PORT = process.env.PORT || 3000;
+const app = express()
+const PORT = process.env.PORT || 3000
 
-app.use(helmet());
-app.use(cors());
-app.use(express.json());
+app.use(helmet())
+app.use(cors())
+app.use(express.json())
 
 app.get('/health', (req, res) => {
-  res.json({ status: 'ok', project: 'inkr-api' });
-});
+  res.json({ status: 'ok', project: 'inkr-api' })
+})
+
+app.use('/api/auth', authRoutes)
 
 app.listen(PORT, () => {
-  console.log(`Inkr API running on port ${PORT}`);
-});
+  console.log(`Inkr API running on port ${PORT}`)
+})
 
-export default app;
+export default app
