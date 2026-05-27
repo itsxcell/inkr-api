@@ -5,7 +5,7 @@ import { packages, checkout, webhook } from './stripe.controller'
 
 const router = Router()
 
-// router.post('/webhook', express.raw({ type: 'application/json' }), webhook)
+router.post('/webhook', webhook)
 
 router.use(authenticate)
 router.get('/packages', packages)
