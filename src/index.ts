@@ -10,8 +10,7 @@ import authRoutes from './modules/auth/auth.routes'
 import creditsRoutes from './modules/credits/credits.routes'
 import generationsRoutes from './modules/generations/generations.routes'
 import { globalLimiter, generationLimiter } from './middleware/rateLimiter'
-
-
+import stripeRoutes from './modules/stripe/stripe.routes'
 
 const app = express()
 const PORT = process.env.PORT || 3000
@@ -30,6 +29,8 @@ app.get('/health', (req, res) => {
 app.use('/api/auth', authRoutes)
 app.use('/api/credits', creditsRoutes)
 app.use('/api/generations', generationLimiter, generationsRoutes)
+app.use('/api/stripe', stripeRoutes)
+
 
 app.listen(PORT, () => {
   console.log(`Inkr API running on port ${PORT}`)
