@@ -23,7 +23,8 @@ router.get(
     const token = jwt.sign({ userId: user.id }, process.env.JWT_SECRET as string, {
       expiresIn: '7d',
     })
-    res.json({ token, user: { id: user.id, name: user.name, email: user.email, creditBalance: user.creditBalance } })
+    const clientUrl = process.env.CLIENT_URL || 'http://localhost:5173'
+    res.redirect(`${clientUrl}/auth/callback?token=${token}&user=${encodeURIComponent(JSON.stringify({ id: user.id, name: user.name, email: user.email, creditBalance: user.creditBalance }))}`)
   }
 )
 
