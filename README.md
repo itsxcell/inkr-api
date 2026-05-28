@@ -2,7 +2,9 @@
 
 > AI writing assistant API for African professionals — built for speed, designed for scale.
 
-Live URL: `https://inkr-api.onrender.com`
+**Live API:** https://inkr-api.onrender.com  
+**Live App:** https://inkr-web.vercel.app  
+**Frontend Repo:** https://github.com/itsxcell/inkr-web
 
 ---
 
