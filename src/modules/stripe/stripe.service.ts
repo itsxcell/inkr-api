@@ -46,8 +46,8 @@ export const createCheckoutSession = async (
       credits: package_.credits.toString(),
       packageId,
     },
-    success_url: `${process.env.CLIENT_URL}/success?session_id={CHECKOUT_SESSION_ID}`,
-    cancel_url: `${process.env.CLIENT_URL}/cancelled`,
+    success_url: `${process.env.CLIENT_URL}/dashboard?payment=success`,
+    cancel_url: `${process.env.CLIENT_URL}/dashboard?payment=cancelled`,
   })
 
   return { url: session.url }
